@@ -14,6 +14,7 @@ module.exports = {
   },
   output: {
     filename: "bundle.js",
+    publicPath: "/rentalhub/"
   },
   devServer: {
     publicPath: "/dist",
