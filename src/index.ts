@@ -13,7 +13,7 @@ async function load() {
         from: "inline",
         config: {
           serverMode: "full",
-          url: "/db.sqlite3.000",
+          url: "rentalhub/db.sqlite3.000",
           requestChunkSize: 4096,
         },
       },
