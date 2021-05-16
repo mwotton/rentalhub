@@ -4,7 +4,7 @@
     "requestChunkSize": 1024,
     "databaseLengthBytes": 1459200,
     "serverChunkSize": 10485760,
-    "urlPrefix": "rentalhub/db.sqlite3.",
+    "urlPrefix": "db.sqlite3.",
     "suffixLength": 3
 }
 
