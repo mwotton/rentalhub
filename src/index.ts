@@ -6,10 +6,8 @@ const workerUrl = new URL(
 );
 const wasmUrl = new URL("sql.js-httpvfs/dist/sql-wasm.wasm", import.meta.url);
 
-declare var worker: WorkerHttpvfs;
-
 async function load() {
-  worker = await createDbWorker(
+  var worker = await createDbWorker(
     [
       {
         from: "inline",
@@ -23,13 +21,14 @@ async function load() {
     workerUrl.toString(),
     wasmUrl.toString()
   );
-
+    return worker;
 }
 
-async function runQuery(q: String) {
+async function runQuery(worker_: Promise<WorkerHttpvfs>, q: String) {
+    const worker = await worker_;
     const result = await worker.db.query(q);
     document.body.textContent = JSON.stringify(result);
 }
 
-load();
-runQuery(`select * from posts`);
+const worker = load();
+runQuery(worker, `select * from posts`);
