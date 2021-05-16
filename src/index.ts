@@ -1,4 +1,4 @@
-import { createDbWorker } from "sql.js-httpvfs";
+import { createDbWorker, WorkerHttpvfs } from "sql.js-httpvfs";
 
 const workerUrl = new URL(
   "sql.js-httpvfs/dist/sqlite.worker.js",
@@ -6,8 +6,10 @@ const workerUrl = new URL(
 );
 const wasmUrl = new URL("sql.js-httpvfs/dist/sql-wasm.wasm", import.meta.url);
 
+declare var worker: WorkerHttpvfs;
+
 async function load() {
-  const worker = await createDbWorker(
+  worker = await createDbWorker(
     [
       {
         from: "inline",
@@ -22,9 +24,12 @@ async function load() {
     wasmUrl.toString()
   );
 
-  const result = await worker.db.query(`select * from posts`);
+}
 
-  document.body.textContent = JSON.stringify(result);
+async function runQuery(q: String) {
+    const result = await worker.db.query(q);
+    document.body.textContent = JSON.stringify(result);
 }
 
 load();
+runQuery(`select * from posts`);
